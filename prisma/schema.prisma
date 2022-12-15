@@ -1,0 +1,23 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Notification {
+  id          String    @id //@id => prisma primary key
+  recipientId String
+  content     String
+  category    String
+  readAt      DateTime? //? => nullable field
+  canceledAt  DateTime? 
+  createdAt   DateTime  @default(now()) //@default(now()) => default value is the current date
+
+  @@index([recipientId]) // it's like a foreing key but from another service 
+}
